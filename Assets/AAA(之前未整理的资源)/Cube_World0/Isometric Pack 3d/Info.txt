@@ -1,0 +1,1 @@
+Iportant - majority of the assets is ready to put in mobile games by default. However, in some cases you should switch the materials to their mobile versions (Tiles, Water, waterfall, banner) before compiling!
