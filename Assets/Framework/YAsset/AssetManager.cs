@@ -193,9 +193,10 @@ namespace YummyGame.Framework
             System.GC.Collect();
         }
 
-        public void Initalize(AssetManager.AssetInitializeComplete success)
+        public void Initalize(AssetManager.AssetInitializeComplete success,
+            AssetManager.AssetErrorCallback error = null)
         {
-            Initalize(new AssetInitializeListener() { InitializeCallback = success });
+            Initalize(new AssetInitializeListener() { InitializeCallback = success,ErrorCallback = error });
         }
 
         public void Initalize(AssetInitializeListener listener)
@@ -307,6 +308,17 @@ namespace YummyGame.Framework
                 ,__G__TRACEBACK__);
             ", path,func));
 #endif
+        }
+
+        public LuaTable LoadLuaTable(string path)
+        {
+#if XLUA_SUPPORT
+            byte[] data = LuaLoader(ref path);
+            if (data == null) return null;
+            object[] ret = lua.DoString(data);
+            if (ret != null && ret.Length > 0) return ret[0] as LuaTable;
+#endif
+            return null;
         }
     }
 }
