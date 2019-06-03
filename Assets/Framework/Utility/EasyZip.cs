@@ -1,5 +1,5 @@
-﻿using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.Zip;
+﻿//using ICSharpCode.SharpZipLib.Core;
+//using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,26 +30,26 @@ namespace YummyGame.Framework
         {
             try
             {
-                if (!Directory.Exists(source)) return;
-                if (File.Exists(file))
-                {
-                    File.Delete(file);
-                }
+                //if (!Directory.Exists(source)) return;
+                //if (File.Exists(file))
+                //{
+                //    File.Delete(file);
+                //}
 
-                ZipConstants.DefaultCodePage = 0;
-                FastZipEvents events = new FastZipEvents();
-                events.Progress = new ProgressHandler(ShowProgress);
-                events.ProgressInterval = TimeSpan.FromSeconds(0.017);
+                //ZipConstants.DefaultCodePage = 0;
+                //FastZipEvents events = new FastZipEvents();
+                //events.Progress = new ProgressHandler(ShowProgress);
+                //events.ProgressInterval = TimeSpan.FromSeconds(0.017);
 
-                events.DirectoryFailure = this.DirectoryFailure;
-                events.FileFailure = this.FileFailure;
+                //events.DirectoryFailure = this.DirectoryFailure;
+                //events.FileFailure = this.FileFailure;
 
-                var fastZip = new FastZip(events);
-                fastZip.CreateEmptyDirectories = true;
-                fastZip.RestoreAttributesOnExtract = false;
-                fastZip.RestoreDateTimeOnExtract = false;
+                //var fastZip = new FastZip(events);
+                //fastZip.CreateEmptyDirectories = true;
+                //fastZip.RestoreAttributesOnExtract = false;
+                //fastZip.RestoreDateTimeOnExtract = false;
 
-                fastZip.CreateZip(file, source, true,null);
+                //fastZip.CreateZip(file, source, true,null);
             }
             catch (Exception e)
             {
@@ -63,27 +63,27 @@ namespace YummyGame.Framework
         {
             try
             {
-                if (!Directory.Exists(outpath))
-                {
-                    Directory.CreateDirectory(outpath);
-                    Debug.Log("创建目录:" + outpath);
-                }
+                //if (!Directory.Exists(outpath))
+                //{
+                //    Directory.CreateDirectory(outpath);
+                //    Debug.Log("创建目录:" + outpath);
+                //}
 
-                ZipConstants.DefaultCodePage = 0;
-                FastZipEvents events = new FastZipEvents();
-                events.Progress = new ProgressHandler(ShowProgress);
-                events.ProgressInterval = TimeSpan.FromSeconds(0.017);
+                //ZipConstants.DefaultCodePage = 0;
+                //FastZipEvents events = new FastZipEvents();
+                //events.Progress = new ProgressHandler(ShowProgress);
+                //events.ProgressInterval = TimeSpan.FromSeconds(0.017);
 
-                events.DirectoryFailure = this.DirectoryFailure;
-                events.FileFailure = this.FileFailure;
+                //events.DirectoryFailure = this.DirectoryFailure;
+                //events.FileFailure = this.FileFailure;
 
-                var fastZip = new FastZip(events);
-                fastZip.CreateEmptyDirectories = true;
-                fastZip.RestoreAttributesOnExtract = false;
-                fastZip.RestoreDateTimeOnExtract = false;
+                //var fastZip = new FastZip(events);
+                //fastZip.CreateEmptyDirectories = true;
+                //fastZip.RestoreAttributesOnExtract = false;
+                //fastZip.RestoreDateTimeOnExtract = false;
 
-                string fileFilter = null;
-                fastZip.ExtractZip(file, outpath, fileFilter);
+                //string fileFilter = null;
+                //fastZip.ExtractZip(file, outpath, fileFilter);
             }
             catch (Exception e)
             {
@@ -93,30 +93,30 @@ namespace YummyGame.Framework
 
         }
 
-        void ShowProgress(object sender, ProgressEventArgs e)
-        {
-            // Very ugly but this is a sample!
-            //			Debug.LogFormat("{0}%", e.PercentComplete);
-            if (_progress != null)
-            {
-                _progress.Invoke(e.PercentComplete);
-            }
-        }
+        //void ShowProgress(object sender, ProgressEventArgs e)
+        //{
+        //    // Very ugly but this is a sample!
+        //    //			Debug.LogFormat("{0}%", e.PercentComplete);
+        //    if (_progress != null)
+        //    {
+        //        _progress.Invoke(e.PercentComplete);
+        //    }
+        //}
 
-        void DirectoryFailure(object sender, ScanFailureEventArgs e)
-        {
-            if (_error != null)
-            {
-                _error.Invoke(e.Name, e.Exception.Message);
-            }
-        }
+        //void DirectoryFailure(object sender, ScanFailureEventArgs e)
+        //{
+        //    if (_error != null)
+        //    {
+        //        _error.Invoke(e.Name, e.Exception.Message);
+        //    }
+        //}
 
-        void FileFailure(object sender, ScanFailureEventArgs e)
-        {
-            if (_error != null)
-            {
-                _error.Invoke(e.Name, e.Exception.Message);
-            }
-        }
+        //void FileFailure(object sender, ScanFailureEventArgs e)
+        //{
+        //    if (_error != null)
+        //    {
+        //        _error.Invoke(e.Name, e.Exception.Message);
+        //    }
+        //}
     }
 }

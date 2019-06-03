@@ -89,8 +89,15 @@ namespace YummyGame.Framework
         public static void CopyDirectory(string sourceDir,string targetDir)
         {
             if (!Directory.Exists(sourceDir)) return;
-            if (Directory.Exists(targetDir)) Directory.Delete(targetDir);
-
+            if (Directory.Exists(targetDir)) Directory.Delete(targetDir,true);
+            Directory.CreateDirectory(targetDir);
+            string[] files = Directory.GetFiles(sourceDir, "*.*", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                string relativepath = file.Substring(sourceDir.Length + 1);
+                string targetFile = Utility.PathCombile(targetDir, relativepath);
+                CopyFile(file, targetFile);
+            }
         }
     }
 

@@ -179,7 +179,7 @@ namespace YummyGame.Framework.Editor
             BuildScript.BuildHotfix();
         }
 
-        [MenuItem("Yummy/打包/打包窗口")]
+        [MenuItem("Yummy/窗体/打包")]
         public static void OpenBuildWindow()
         {
             BuildWindow window = GetWindow<BuildWindow>();

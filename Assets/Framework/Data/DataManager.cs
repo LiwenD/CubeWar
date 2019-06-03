@@ -1,12 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+#if XLUA_SUPPORT
+using XLua;
+#endif
 
 namespace YummyGame.Framework
 {
     public class DataManager:UnitySingleton<DataManager>
     {
         static string secret = "f&a%rtw@zg56&k-";
+
+        private Dictionary<string, DataTable> _tables = new Dictionary<string, DataTable>();
+        public DataTable LoadTable(string datapath)
+        {
+            if (_tables.ContainsKey(datapath)) return _tables[datapath];
+            DataTable table = new DataTable();
+#if XLUA_SUPPORT
+            LuaTable xluaTable = AssetManager.Instance.LoadLuaTable(datapath);
+            table._internalTable = xluaTable;
+#endif
+            _tables.Add(datapath, table);
+            return table;
+        }
 
         private string ParseString(string key)
         {

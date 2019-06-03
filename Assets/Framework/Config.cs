@@ -19,6 +19,9 @@ namespace YummyGame.Framework
         //Lua打包的根路径
         public const string LuaSource = "lua";
 
+        //Lua表格导出的根路径,相对于lua路径
+        public const string LuaTableSource = "data";
+
         //Assetbundle后缀
         public const string AssetBundleSuffix = "ab";
 
@@ -29,7 +32,7 @@ namespace YummyGame.Framework
         public const string ZipName = "res.zip";
 
         //是否使用AssetBundle打包 false就是Resources打包
-        public const bool UseAssetBundle = true;
+        public const bool UseAssetBundle = false;
 
         //资源更新地址
         public const string AssetUpdateURI = "http://47.100.121.103/update";
@@ -102,12 +105,26 @@ namespace YummyGame.Framework
             }
         }
 
+        //构建目标路径
         public static string BuildOutputPath
         {
             get
             {
 #if UNITY_EDITOR
                 return Utility.PathCombile(Application.dataPath, "../builds");
+#else
+                return "";
+#endif
+            }
+        }
+
+        //Excel表格路径
+        public static string ExcelTablePath
+        {
+            get
+            {
+#if UNITY_EDITOR
+                return Utility.PathCombile(Application.dataPath, "../data");
 #else
                 return "";
 #endif

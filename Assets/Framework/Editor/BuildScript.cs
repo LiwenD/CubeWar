@@ -384,10 +384,11 @@ namespace YummyGame.Framework
                     }
                     sw.Close();
                 }
-                EasyZip zip = new EasyZip();
-                zip.Zip(resZip, updateTmpPath);
-                zip.Unzip(resZip, current);
-                File.Delete(resZip);
+                Utility.CopyDirectory(updateTmpPath, current);
+                //EasyZip zip = new EasyZip();
+                //zip.Zip(resZip, updateTmpPath);
+                //zip.Unzip(resZip, current);
+                //File.Delete(resZip);
                 Directory.Delete(updateTmpPath,true);
             }
         }
@@ -427,13 +428,13 @@ namespace YummyGame.Framework
             {
                 Directory.CreateDirectory(Application.streamingAssetsPath);
             }
-            
-            EasyZip zip = new EasyZip();
-            var zipFile = Utility.PathCombile(Application.streamingAssetsPath, Config.ZipName);
-            zip.Zip(zipFile, output);
-            zip.Unzip(zipFile, Application.streamingAssetsPath);
+            Utility.CopyDirectory(output, Application.streamingAssetsPath);
+            //EasyZip zip = new EasyZip();
+            //var zipFile = Utility.PathCombile(Application.streamingAssetsPath, Config.ZipName);
+            //zip.Zip(zipFile, output);
+            //zip.Unzip(zipFile, Application.streamingAssetsPath);
 
-            File.Delete(zipFile);
+            //File.Delete(zipFile);
 
             AssetDatabase.Refresh();
         }
