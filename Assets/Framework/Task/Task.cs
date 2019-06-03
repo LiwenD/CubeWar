@@ -399,6 +399,13 @@ namespace YummyGame.Framework
         {
             return new ParallelTaskChain();
         }
+
+        public static YummyTask<T> As<T>(this ITask task,Func<T> callback,TaskLooper looper = null)
+        {
+            var decorator = new DecoratorTask<T>(task, callback, looper);
+            decorator.Start();
+            return decorator;
+        }
     }
 }
 
