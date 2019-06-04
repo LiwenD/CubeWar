@@ -24,7 +24,10 @@ namespace YummyGame.Framework
             if(initialed == false)
             {
                 TextAsset ta = Resources.Load<TextAsset>("Version");
-                initialVersion = Version.FromString(ta.text);
+                if (ta != null)
+                {
+                    initialVersion = Version.FromString(ta.text);
+                }
                 initialed = true;
             }
             return initialVersion;

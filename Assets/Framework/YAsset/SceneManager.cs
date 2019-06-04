@@ -16,15 +16,17 @@ namespace YummyGame.Framework
 #if CHECK_UPDATE_EDITOR || !UNITY_EDITOR
         private Bundle _lastBundle;
 #endif
-
-        public YummyTask<NullObject> LoadScene(string scenePath)
+        public AssetLoader Loader { get; private set; }
+        public ITask LoadScene(string scenePath)
         {
             if (_isLoading) return null;
+            ResetLoader();
 #if CHECK_UPDATE_EDITOR || !UNITY_EDITOR
             if (_lastBundle != null)
             {
                 _lastBundle.Release();
                 _lastBundle = null;
+                
                 Resources.UnloadUnusedAssets();
                 System.GC.Collect();
             }
@@ -36,16 +38,27 @@ namespace YummyGame.Framework
             task.OnTaskFinish((_) =>
             {
                 _lastBundle = AssetBundleManager.Instance.GetBundle(abPath);
+                Loader = new AssetLoader();
                 UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
                 _isLoading = false;
             });
             return task;
 #else
-            scenePath = Utility.PathCombile("Assets",Config.AssetBundleEditorRoot, scenePath)+".unity";
-            EditorSceneManager.LoadSceneInPlayMode(scenePath,new LoadSceneParameters(LoadSceneMode.Single));
-
-            return ImmediateTask.Start();
+            //scenePath = Utility.PathCombile("Assets",Config.AssetBundleEditorRoot, scenePath)+".unity";
+            //EditorSceneManager.LoadSceneInPlayMode(scenePath,new LoadSceneParameters(LoadSceneMode.Single));
+            Loader = new AssetLoader();
+            return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(scenePath).AsyncAsTask();
+            //return ImmediateTask.Start();
 #endif
+        }
+
+        private void ResetLoader()
+        {
+            if (Loader != null)
+            {
+                Loader.Destroy();
+                Loader = null;
+            }
         }
     }
 }

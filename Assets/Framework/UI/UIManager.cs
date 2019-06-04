@@ -34,7 +34,7 @@ namespace YummyGame.Framework
         private void Awake()
         {
             _mapping = new UIWindowMapping();
-            _initRoot();
+            if (!_initRoot()) return;
             _initLayers();
         }
 
@@ -129,9 +129,10 @@ namespace YummyGame.Framework
             return null;
         }
 
-        private void _initRoot()
+        private bool _initRoot()
         {
-            GameObject root = Object.Instantiate(Resources.Load("Canvas")) as GameObject;
+            GameObject root = GameObject.Find("Canvas");
+            if (root == null) return false;
             Object.DontDestroyOnLoad(root);
             m_root = root.transform;
             m_canvas = m_root.GetComponent<Canvas>();
@@ -143,6 +144,7 @@ namespace YummyGame.Framework
             canvasSize = new Vector2(Screen.width / ratio, Screen.height / ratio);
 
             Canvas.ForceUpdateCanvases();
+            return true;
         }
 
         private void _initLayers()
