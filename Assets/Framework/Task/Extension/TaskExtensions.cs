@@ -18,5 +18,12 @@ namespace YummyGame.Framework
             task.Start();
             return task;
         }
+
+        public static ITaskChain AsChain(this ITask task,TaskLooper looper = null)
+        {
+            var seq = new SequenceTaskChain(looper).Append(task);
+            seq.Start();
+            return seq;
+        }
     }
 }

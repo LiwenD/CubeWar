@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 using YummyGame.Framework;
 
@@ -24,7 +25,7 @@ namespace YummyGame.CubeWar
 
         void start()
         {
-            Game.ChangeScene("Main");
+            Game.ChangeScene("Main").AsChain().Event(()=> { Debug.Log("加载场景完成"); });
             Close();
         }
     }

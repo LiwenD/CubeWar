@@ -23,7 +23,6 @@ namespace YummyGame.Framework
         public static void Initalize(AssetManager.AssetInitializeComplete success,
             AssetManager.AssetErrorCallback error = null)
         {
-            var ui = UIManager.Instance;
             AssetManager.Instance.Initalize(success, error);
         }
 

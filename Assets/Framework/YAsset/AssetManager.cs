@@ -201,6 +201,7 @@ namespace YummyGame.Framework
 
         public void Initalize(AssetInitializeListener listener)
         {
+            var ui = UIManager.Instance;
             if (searchPaths == null)
                 searchPaths = new List<string>();
             
