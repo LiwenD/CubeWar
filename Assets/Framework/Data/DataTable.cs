@@ -13,20 +13,23 @@ namespace YummyGame.Framework
         public LuaTable _internalTable;
 
 #endif
+#if XLUA_SUPPORT
         public LuaTable GetRowTable(int row)
         {
-#if XLUA_SUPPORT
+
             LuaTable rowTable = null;
             _internalTable.Get(row, out rowTable);
             return rowTable;
-#else
-            return null;
-#endif
         }
+#endif
 
         public IEnumerable<int> GetAllRows()
         {
+#if XLUA_SUPPORT
             return _internalTable.GetKeys<int>();
+#else
+            return null;
+#endif
         }
 
         public T Get<T>(int row,string key)

@@ -310,15 +310,17 @@ namespace YummyGame.Framework
 #endif
         }
 
+#if XLUA_SUPPORT
         public LuaTable LoadLuaTable(string path)
         {
-#if XLUA_SUPPORT
+
             byte[] data = LuaLoader(ref path);
             if (data == null) return null;
             object[] ret = lua.DoString(data);
             if (ret != null && ret.Length > 0) return ret[0] as LuaTable;
-#endif
+
             return null;
         }
+#endif
     }
 }

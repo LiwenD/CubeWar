@@ -31,7 +31,7 @@ namespace YummyGame.Framework
             PlayerPrefs.DeleteAll();
         }
 
-        [MenuItem("Yummy/AssetBundles/BundleMode")]
+        //[MenuItem("Yummy/AssetBundles/BundleMode")]
         public static void SwitchAssetBundle()
         {
             string[] symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone).Split(';');
