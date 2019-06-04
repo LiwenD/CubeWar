@@ -15,9 +15,11 @@ namespace YummyGame.Framework
 #if XLUA_SUPPORT
         public static LuaEnv Lua = AssetManager.Instance.lua;
 #endif
-        public static ITask ChangeScene(string sceneName)
+        public static ITaskChain ChangeScene(string sceneName)
         {
-            return SceneManager.Instance.LoadScene(sceneName);
+            var chain = SceneManager.Instance.LoadScene(sceneName).AsChain();
+            chain.Start();
+            return chain;
         }
 
         public static void Initalize(AssetManager.AssetInitializeComplete success,
