@@ -13,27 +13,23 @@ namespace YummyGame.CubeWar
         [Inst("StartGame")]
         public Button startBtn;
 
-<<<<<<< HEAD
         [Inst("ContinueGame")]
         public Button continueBtn;
 
         [Inst("Setting")]
         public Button settingBtn;
-=======
+
         [AutoClose]
         [Inst("Close")]
         public Button closeBtn;
->>>>>>> a5dc2f93d37d2b3acf3189f53e9a201c4d880212
 
         public override void OnShow()
         {
             startBtn.onClick.AddListener(start);
-<<<<<<< HEAD
             settingBtn.onClick.AddListener(setting);
             continueBtn.onClick.AddListener(continueGame);
-=======
+
             loadTable();
->>>>>>> a5dc2f93d37d2b3acf3189f53e9a201c4d880212
         }
 
         public override void OnHide()
@@ -49,7 +45,6 @@ namespace YummyGame.CubeWar
             Close();
         }
 
-<<<<<<< HEAD
         void setting()
         {
 
@@ -58,13 +53,14 @@ namespace YummyGame.CubeWar
         void continueGame()
         {
 
-=======
+        }
+
         void loadTable()
         {
             DataTable table = Game.LoadTable("data/TestTable");
             int attack = table.Get<int>(2, "attack");
             Debug.Log(attack);
->>>>>>> a5dc2f93d37d2b3acf3189f53e9a201c4d880212
         }
+
     }
 }
