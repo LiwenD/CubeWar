@@ -37,5 +37,10 @@ namespace YummyGame.Framework
         {
             UIManager.Instance.CloseUI(uuid, destroy);
         }
+
+        public static DataTable LoadTable(string path)
+        {
+            return DataManager.Instance.LoadTable(path);
+        }
     }
 }

@@ -13,9 +13,14 @@ namespace YummyGame.CubeWar
         [Inst("StartGame")]
         public Button startBtn;
 
+        [AutoClose]
+        [Inst("Close")]
+        public Button closeBtn;
+
         public override void OnShow()
         {
             startBtn.onClick.AddListener(start);
+            loadTable();
         }
 
         public override void OnHide()
@@ -27,6 +32,13 @@ namespace YummyGame.CubeWar
         {
             Game.ChangeScene("Main").Event(()=> { Debug.Log("加载场景完成"); });
             Close();
+        }
+
+        void loadTable()
+        {
+            DataTable table = Game.LoadTable("data/TestTable");
+            int attack = table.Get<int>(2, "attack");
+            Debug.Log(attack);
         }
     }
 }

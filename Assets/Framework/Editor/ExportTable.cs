@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Text;
 using System;
 using System.Reflection;
-
+using static UnityEngine.ParticleSystem;
 
 namespace YummyGame.Framework
 {
