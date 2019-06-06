@@ -41,7 +41,7 @@ namespace YummyGame.Framework
         public const string AssetVersionURI = "http://47.100.121.103/latest.txt";
 
         //熱更包的導出路徑
-        public const string UpdateListExportPath = "D:/update";
+        public const string UpdateListExportPath = "D:/cubewar";
 
         //资源根路径
         public static string AssetRoot

@@ -367,7 +367,7 @@ namespace YummyGame.Framework
                     Directory.CreateDirectory(current);
                 }
                 var currentFile = Utility.PathCombile(current, "update.txt");
-                var resZip = Utility.PathCombile(current, "res.zip");
+
                 using (FileStream fs = new FileStream(currentFile, FileMode.Create, FileAccess.Write))
                 {
                     StreamWriter sw = new StreamWriter(fs);
@@ -443,6 +443,12 @@ namespace YummyGame.Framework
         {
             try
             {
+                var path = Utility.PathCombile(Application.dataPath, "Resources");
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                    AssetDatabase.Refresh();
+                }
                 using (FileStream fs = new FileStream(Utility.PathCombile(Application.dataPath, "Resources/Version.txt")
                     , FileMode.OpenOrCreate, FileAccess.Write))
                 {
@@ -529,12 +535,10 @@ namespace YummyGame.Framework
                 FileInfo file = info as FileInfo;
                 if (file != null)
                 {
-                    //是文件，设置标记
                     SetFileABLabel(file, name);
                 }
                 else
                 {
-                    //是目录，递归调用
                     _RealSetABLabel(info, name);
                 }
             }
