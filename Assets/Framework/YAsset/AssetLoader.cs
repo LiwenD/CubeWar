@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.U2D;
 using Object = UnityEngine.Object;
 
 namespace YummyGame.Framework
@@ -10,6 +11,27 @@ namespace YummyGame.Framework
         public delegate void AssetLoaderCallback<T>(T asset);
         public delegate void AssetLoaderCallback();
         private Dictionary<string,Asset> m_assets = new Dictionary<string,Asset>();
+
+        public T LoadAsset<T>(string path)
+            where T : Object
+        {
+            if (m_assets.ContainsKey(path) && m_assets[path].IsValid)
+            {
+                return m_assets[path].asset as T;
+            }
+            if (m_assets.ContainsKey(path) && !m_assets[path].IsValid)
+            {
+                m_assets.Remove(path);
+            }
+
+            Asset asset = AssetManager.Instance.Load(path, typeof(T));
+            if (!m_assets.ContainsKey(path))
+            {
+                m_assets.Add(path, asset);
+            }
+            return asset.asset as T;
+        }
+
         public void LoadAssetAsync<T>(string path, AssetLoaderCallback<T> callback)
             where T:Object
         {
@@ -84,7 +106,33 @@ namespace YummyGame.Framework
                 }).Start();
 #endif
             }
-            
+        }
+
+        public Sprite LoadSprite(string path)
+        {
+#if CHECK_UPDATE_EDITOR || !UNITY_EDITOR
+            string[] res = ABPathTools.FullPathToSpriteFrames(path);
+            SpriteAtlas frame = LoadAsset<SpriteAtlas>(res[0]);
+            return frame.GetSprite(res[1]);
+#else
+            return LoadAsset<Sprite>(path);
+#endif
+        }
+
+        public void LoadSpriteAsync(string path, AssetLoaderCallback<Sprite> callback)
+        {
+#if CHECK_UPDATE_EDITOR || !UNITY_EDITOR
+            string[] res = ABPathTools.FullPathToSpriteFrames(path);
+            LoadAssetAsync<SpriteAtlas>(res[0], (frame) =>
+            {
+                callback?.Invoke(frame.GetSprite(res[1]));
+            });
+#else
+            LoadAssetAsync<Sprite>(path, (sprite) =>
+            {
+                callback?.Invoke(sprite);
+            });
+#endif
         }
 
         public void Destroy()
@@ -94,18 +142,6 @@ namespace YummyGame.Framework
                 asset.Release();
             }
             m_assets.Clear();
-        }
-    }
-
-    public class AssetLoaderTask<T> : YummyTask<T>
-    {
-        public AssetLoaderTask()
-        {
-
-        }
-        protected override void OnTaskUpdateInternal()
-        {
-            
         }
     }
 }

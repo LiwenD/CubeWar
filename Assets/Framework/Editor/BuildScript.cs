@@ -31,7 +31,7 @@ namespace YummyGame.Framework
             PlayerPrefs.DeleteAll();
         }
 
-        //[MenuItem("Yummy/AssetBundles/BundleMode")]
+        [MenuItem("Yummy/AssetBundles/BundleMode")]
         public static void SwitchAssetBundle()
         {
             string[] symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone).Split(';');
@@ -367,7 +367,7 @@ namespace YummyGame.Framework
                     Directory.CreateDirectory(current);
                 }
                 var currentFile = Utility.PathCombile(current, "update.txt");
-
+                var resZip = Utility.PathCombile(current, "res.zip");
                 using (FileStream fs = new FileStream(currentFile, FileMode.Create, FileAccess.Write))
                 {
                     StreamWriter sw = new StreamWriter(fs);
@@ -443,12 +443,6 @@ namespace YummyGame.Framework
         {
             try
             {
-                var path = Utility.PathCombile(Application.dataPath, "Resources");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                    AssetDatabase.Refresh();
-                }
                 using (FileStream fs = new FileStream(Utility.PathCombile(Application.dataPath, "Resources/Version.txt")
                     , FileMode.OpenOrCreate, FileAccess.Write))
                 {
@@ -510,13 +504,13 @@ namespace YummyGame.Framework
                 int index = 0;
                 foreach (var typeDir in dirs)
                 {
-                    ShowProgress("正在设置资源:", index++, files.Length + dirs.Length);
+                    ShowProgress("正在收集资源:", index++, files.Length + dirs.Length);
                     _RealSetABLabel(typeDir, sceneDir.Name + "/" + typeDir.Name);
                 }
                 
                 foreach (var file in files)
                 {
-                    ShowProgress("正在设置资源:", index++, files.Length + dirs.Length);
+                    ShowProgress("正在收集资源:", index++, files.Length + dirs.Length);
                     SetFileABLabel(file, sceneDir.Name);
                 }
             }
@@ -533,12 +527,17 @@ namespace YummyGame.Framework
             foreach (FileSystemInfo info in fileInfos)
             {
                 FileInfo file = info as FileInfo;
+                if (file.Extension.Equals(".png")
+                    || file.Extension.Equals(".jpg")
+                    || file.Extension.Equals(".jpeg")) continue;
                 if (file != null)
                 {
+                    //是文件，设置标记
                     SetFileABLabel(file, name);
                 }
                 else
                 {
+                    //是目录，递归调用
                     _RealSetABLabel(info, name);
                 }
             }

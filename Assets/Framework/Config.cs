@@ -16,6 +16,9 @@ namespace YummyGame.Framework
         //Assetbundle打包的根路径
         public const string AssetBundleEditorRoot = "yummy";
 
+        //图集路径 相对于ab或者resources
+        public const string AtlasRoot = "UI";
+
         //Lua打包的根路径
         public const string LuaSource = "lua";
 

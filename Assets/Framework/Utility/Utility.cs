@@ -86,6 +86,16 @@ namespace YummyGame.Framework
             return str.Replace("\\", "/");
         }
 
+        public static string NormalPathToUnity(string path)
+        {
+            return PathCombile("Assets", path.Substring(Application.dataPath.Length + 1));
+        }
+
+        public static string UnityToNormalPath(string path)
+        {
+            return PathCombile(Application.dataPath, path.Substring(7));
+        }
+
         public static void CopyDirectory(string sourceDir,string targetDir)
         {
             if (!Directory.Exists(sourceDir)) return;

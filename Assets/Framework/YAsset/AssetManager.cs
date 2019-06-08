@@ -72,7 +72,11 @@ namespace YummyGame.Framework
             }
             if (Config.UseAssetBundle)
             {
+#if CHECK_UPDATE_EDITOR || !UNITY_EDITOR
                 return LoadByAssetBundle(path, type);
+#else
+                return LoadByEditor(path, type);
+#endif
             }
             else
             {
@@ -164,6 +168,22 @@ namespace YummyGame.Framework
             }
             return ImmediateTask.Start();
         }
+
+        private Asset LoadByEditor(string path, Type type)
+        {
+            var resPath = Utility.PathCombile("Assets", Config.AssetBundleEditorRoot, path) + ABPathTools.GetObjectSuffix(type);
+            Object obj = AssetDatabase.LoadAssetAtPath(resPath, type);
+            if (!m_assets.ContainsKey(path))
+            {
+                Asset asset = new Asset(path, type, obj);
+                m_assets.Add(path, asset);
+            }
+            else
+            {
+                m_assets[path].asset = obj;
+            }
+            return m_assets[path];
+        }
 #endif
 
         private YummyTask<NullObject> LoadAsyncByAssetBundle(string path, Type type)
@@ -201,7 +221,6 @@ namespace YummyGame.Framework
 
         public void Initalize(AssetInitializeListener listener)
         {
-            var ui = UIManager.Instance;
             if (searchPaths == null)
                 searchPaths = new List<string>();
             
@@ -311,17 +330,15 @@ namespace YummyGame.Framework
 #endif
         }
 
-#if XLUA_SUPPORT
         public LuaTable LoadLuaTable(string path)
         {
-
+#if XLUA_SUPPORT
             byte[] data = LuaLoader(ref path);
             if (data == null) return null;
             object[] ret = lua.DoString(data);
             if (ret != null && ret.Length > 0) return ret[0] as LuaTable;
-
+#endif
             return null;
         }
-#endif
     }
 }
