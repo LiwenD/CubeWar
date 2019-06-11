@@ -82,7 +82,9 @@
     <Compile Include="Assets\Framework\Editor\BuildWindow.cs" />
     <Compile Include="Assets\Framework\Editor\ExportTable.cs" />
     <Compile Include="Assets\Framework\Editor\ExportTableWindow.cs" />
+    <Compile Include="Assets\Framework\Editor\ImporterSpriterSetting.cs" />
     <Compile Include="Assets\Framework\Editor\Patches.cs" />
+    <Compile Include="Assets\Framework\Editor\TexturePacker.cs" />
     <Compile Include="Assets\XLua\Editor\ExampleConfig.cs" />
     <Compile Include="Assets\XLua\Examples\13_BuildFromCLI\Editor\BuildFromCLI.cs" />
     <Compile Include="Assets\XLua\Src\Editor\Generator.cs" />

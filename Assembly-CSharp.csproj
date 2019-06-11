@@ -205,6 +205,9 @@
     <Compile Include="Assets\Framework\Config.cs" />
     <Compile Include="Assets\Framework\Data\DataManager.cs" />
     <Compile Include="Assets\Framework\Data\DataTable.cs" />
+    <Compile Include="Assets\Framework\Event\Event.cs" />
+    <Compile Include="Assets\Framework\Event\EventTest.cs" />
+    <Compile Include="Assets\Framework\Event\MsgWrapper.cs" />
     <Compile Include="Assets\Framework\Extension\GameObjectExtension.cs" />
     <Compile Include="Assets\Framework\Extension\MonobehaviorExtension.cs" />
     <Compile Include="Assets\Framework\Facade.cs" />
@@ -413,6 +416,7 @@
     <None Include="Assets\Environment\Cube0\Standard Assets\Effects\ImageEffects\Shaders\_DepthOfField\SeparableBlur.shader" />
     <None Include="Assets\Environment\Cube0\Standard Assets\Effects\ImageEffects\Shaders\MotionBlurClear.shader" />
     <None Include="Assets\XLua\Examples\07_AsyncTest\Resources\message_box.lua.txt" />
+    <None Include="Assets\Game\Character\资源简单说明.txt" />
     <None Include="Assets\Environment\Cube0\Standard Assets\Effects\ImageEffects\Shaders\ColorCorrectionEffect.shader" />
     <None Include="Assets\Environment\Cube0\Standard Assets\Effects\ImageEffects\Shaders\GrayscaleEffect.shader" />
     <None Include="Assets\Environment\Cube0\Standard Assets\Effects\ImageEffects\Shaders\SepiaToneEffect.shader" />
