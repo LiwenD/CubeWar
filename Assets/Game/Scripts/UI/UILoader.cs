@@ -10,12 +10,15 @@ namespace YummyGame.CubeWar
     {
         public override string ResourcePath => "UI/UILoader";
 
+        [UIClick("start")]
         [Inst("StartGame")]
         public Button startBtn;
 
+        [UIClick("continueGame")]
         [Inst("ContinueGame")]
         public Button continueBtn;
 
+        [UIClick("setting")]
         [Inst("Setting")]
         public Button settingBtn;
 
@@ -25,18 +28,18 @@ namespace YummyGame.CubeWar
 
         public override void OnShow()
         {
-            startBtn.onClick.AddListener(start);
-            settingBtn.onClick.AddListener(setting);
-            continueBtn.onClick.AddListener(continueGame);
+            //startBtn.onClick.AddListener(start);
+            //settingBtn.onClick.AddListener(setting);
+            //continueBtn.onClick.AddListener(continueGame);
 
             loadTable();
         }
 
         public override void OnHide()
         {
-            startBtn.onClick.RemoveAllListeners();
-            settingBtn.onClick.RemoveAllListeners();
-            continueBtn.onClick.RemoveAllListeners();
+            //startBtn.onClick.RemoveAllListeners();
+            //settingBtn.onClick.RemoveAllListeners();
+            //continueBtn.onClick.RemoveAllListeners();
         }
 
         void start()
@@ -47,12 +50,12 @@ namespace YummyGame.CubeWar
 
         void setting()
         {
-
+            Debug.Log("setting");
         }
 
         void continueGame()
         {
-
+            Debug.Log("continueGame");
         }
 
         void loadTable()

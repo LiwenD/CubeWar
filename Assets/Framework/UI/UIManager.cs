@@ -108,6 +108,7 @@ namespace YummyGame.Framework
 
         private void _remShowDic(UIWindow window)
         {
+            _mapping.DestroyWindow(window.GetType(), window);
             window.OnHide();
             window.root.SetActive(false);
             m_shows.Remove(window.uuid);
