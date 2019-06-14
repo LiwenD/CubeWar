@@ -77,7 +77,6 @@ namespace YummyGame.Framework
             }
         }
 
-        public static ulong _uuid = 0;
         public static Dictionary<ulong, List<IBaseEvent>> dic = new Dictionary<ulong, List<IBaseEvent>>();
         public static void AddEventListener<T>(ulong uuid, Action<T> callback)
         {

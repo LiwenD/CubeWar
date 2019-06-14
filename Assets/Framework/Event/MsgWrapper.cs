@@ -5,12 +5,14 @@ using System.Text;
 
 namespace YummyGame.Framework
 {
-    class MsgWrapper<T> 
+    public class IMsgWrapper
     {
-        public MsgWrapper() { this.uuid = ++Event._uuid; }
-
-        public ulong uuid { get;private set; }
-
+        static ulong _uuid;
+        public ulong uuid;
+        public IMsgWrapper() { this.uuid = ++_uuid; }
+    }
+    public class MsgWrapper<T> : IMsgWrapper
+    {
         public void AddListener(Action<T> callback)
         {
             Event.AddEventListener(uuid, callback);
@@ -27,11 +29,8 @@ namespace YummyGame.Framework
         }
     }
 
-    class MsgWrapper
+    public class MsgWrapper:IMsgWrapper
     {
-        public MsgWrapper() { this.uuid = ++Event._uuid; }
-
-        public ulong uuid { get; private set; }
 
         public void AddListener(Action callback)
         {
@@ -49,11 +48,8 @@ namespace YummyGame.Framework
         }
     }
 
-    class MsgWrapper<T1,T2>
+    public class MsgWrapper<T1,T2>:IMsgWrapper
     {
-        public MsgWrapper() { this.uuid = ++Event._uuid; }
-
-        public ulong uuid { get; private set; }
 
         public void AddListener(Action<T1,T2> callback)
         {
@@ -71,11 +67,8 @@ namespace YummyGame.Framework
         }
     }
 
-    class MsgWrapper<T1, T2, T3>
+    public class MsgWrapper<T1, T2, T3>:IMsgWrapper
     {
-        public MsgWrapper() { this.uuid = ++Event._uuid; }
-
-        public ulong uuid { get; private set; }
 
         public void AddListener(Action<T1, T2, T3> callback)
         {
@@ -93,11 +86,8 @@ namespace YummyGame.Framework
         }
     }
 
-    class MsgWrapper<T1, T2, T3, T4>
+    public class MsgWrapper<T1, T2, T3, T4>:IMsgWrapper
     {
-        public MsgWrapper() { this.uuid = ++Event._uuid; }
-
-        public ulong uuid { get; private set; }
 
         public void AddListener(Action<T1, T2, T3, T4> callback)
         {

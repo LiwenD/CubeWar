@@ -34,4 +34,5 @@ namespace YummyGame.Framework
             this.func = func;
         }
     }
+
 }
