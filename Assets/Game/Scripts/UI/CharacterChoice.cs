@@ -24,6 +24,13 @@ namespace YummyGame.CubeWar
         [Inst("BtnEnter")]
         public Button btnEnter;
 
+        #region 重载
+        public override void OnShow()
+        {
+            base.OnShow();
+            TestLoadTable();
+        }
+        #endregion
 
         void BtnUp()
         {
@@ -38,6 +45,13 @@ namespace YummyGame.CubeWar
         void BtnEnter()
         {
             Debug.Log("BtnEnter");
+        }
+
+        void TestLoadTable()
+        {
+            DataTable dataTable = Game.LoadTable("data/WeaponTable");
+            int id = dataTable.Get<int>(1, "id");
+            Debug.Log(id);
         }
     }
 }

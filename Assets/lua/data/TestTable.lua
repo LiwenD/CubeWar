@@ -1,4 +1,4 @@
---this is exported by tools 2019/6/5 9:46:51
+--this is exported by tools 2019/6/17 10:24:03
 local data = {
     [1] = {id=1, attack=10, defence=10, name='方块1', },
     [2] = {id=2, attack=11, defence=11, name='方块2', },

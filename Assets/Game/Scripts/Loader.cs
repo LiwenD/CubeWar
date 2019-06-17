@@ -15,6 +15,7 @@ namespace YummyGame.CubeWar
         private void initAssetComplete()
         {
             Game.OpenUI<UILoader>("Background");
+            //Game.OpenUI<CharacterChoice>("Background");
         }
     }
 }

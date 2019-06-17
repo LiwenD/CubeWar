@@ -1,4 +1,4 @@
---this is exported by tools 2019/6/4 11:25:58
+--this is exported by tools 2019/6/17 10:24:03
 local data = {
     [1] = {roleid=1, rolename='剑士', prefab='Role/Hero/Sword', normalattack='Sword/NormalAttack', },
     [2] = {roleid=2, rolename='野蛮人', prefab='Role/Hero/Sword', normalattack='Sword/NormalAttack', },
