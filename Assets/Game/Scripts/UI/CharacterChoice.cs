@@ -35,47 +35,69 @@ namespace YummyGame.CubeWar
         [Inst("ChoiceMode/BtnModeDown")]
         public Button btnModeDown;
 
+        TableManager tableManager;
+        int occupationIndex = 1;
+        List<Transform> characterModes = new List<Transform>();
+        int modeIndex = 0;
 
         #region 重载
+        public override void OnCreate()
+        {
+            base.OnCreate();
+            Transform showMode = root.transform.Find("ChoiceMode/ShowMode");
+            for (int i = 0; i < showMode.childCount; i++)
+            {
+                characterModes.Add(showMode.GetChild(i));
+            }
+        }
+
         public override void OnShow()
         {
             base.OnShow();
-            TestLoadTable();
+            tableManager = CubeWarManager.Instance.MTableManager;
+            occupationIndex = 1;
+            SetOccupationName();
         }
         #endregion
 
         #region Btn
         void BtnOccuUP()
         {
-            Debug.Log("BtnUp");
+            occupationIndex--;
+            occupationIndex = occupationIndex <= 0 ? (int)OccupationType.Max - 1 : occupationIndex;
         }
 
         void BtnOccuDown()
         {
-            Debug.Log("BtnDown");
+            occupationIndex++;
+            occupationIndex = occupationIndex >= (int)OccupationType.Max ? 1 : occupationIndex;
         }
 
         void BtnEnter()
         {
-            Debug.Log("BtnEnter");
+            Debug.Log("选择职业完成，进入下一关场景");
         }
 
         void BtnModeUP()
         {
-            Debug.Log("BtnModeUP");
+            modeIndex--;
+            modeIndex = modeIndex < 0 ? characterModes.Count - 1 : modeIndex;
         }
 
         void BtnModeDown()
         {
-            Debug.Log("BtnModeDown");
+            modeIndex++;
+            modeIndex = modeIndex >= characterModes.Count ? 0 : modeIndex;
         }
         #endregion
 
-        void TestLoadTable()
+        /// <summary>
+        /// 设置显示职业名字的text
+        /// </summary>
+        void SetOccupationName()
         {
-            DataTable dataTable = Game.LoadTable("data/WeaponTable");
-            int id = dataTable.Get<int>(1, "id");
-            Debug.Log(id);
+            string name = tableManager.GetTableElement<string>(TableType.OccupationTable, occupationIndex, Consts.TableKeyOccupation_Name);
+            occupationName.text = name;
         }
     }
 }
