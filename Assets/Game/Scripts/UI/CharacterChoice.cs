@@ -12,17 +12,29 @@ namespace YummyGame.CubeWar
     {
         public override string ResourcePath => "UI/CharacterChoice";
 
-        [UIClick("BtnUp")]
-        [Inst("BtnUp")]
-        public Button btnUp;
+        [Inst("Occupation/OccupationName")]
+        public Text occupationName;
 
-        [UIClick("BtnDown")]
-        [Inst("BtnDown")]
+        [UIClick("BtnOccuUP")]
+        [Inst("Occupation/BtnOccuUP")]
+        public Button btnOccuUP;
+
+        [UIClick("BtnOccuDown")]
+        [Inst("Occupation/BtnOccuDown")]
         public Button btnDown;
 
         [UIClick("BtnEnter")]
-        [Inst("BtnEnter")]
+        [Inst("Occupation/BtnEnter")]
         public Button btnEnter;
+
+        [UIClick("BtnModeUP")]
+        [Inst("ChoiceMode/BtnModeUP")]
+        public Button btnModeUP;
+
+        [UIClick("BtnModeDown")]
+        [Inst("ChoiceMode/BtnModeDown")]
+        public Button btnModeDown;
+
 
         #region 重载
         public override void OnShow()
@@ -32,12 +44,13 @@ namespace YummyGame.CubeWar
         }
         #endregion
 
-        void BtnUp()
+        #region Btn
+        void BtnOccuUP()
         {
             Debug.Log("BtnUp");
         }
 
-        void BtnDown()
+        void BtnOccuDown()
         {
             Debug.Log("BtnDown");
         }
@@ -46,6 +59,17 @@ namespace YummyGame.CubeWar
         {
             Debug.Log("BtnEnter");
         }
+
+        void BtnModeUP()
+        {
+            Debug.Log("BtnModeUP");
+        }
+
+        void BtnModeDown()
+        {
+            Debug.Log("BtnModeDown");
+        }
+        #endregion
 
         void TestLoadTable()
         {
