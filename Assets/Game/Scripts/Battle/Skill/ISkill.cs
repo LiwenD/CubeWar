@@ -4,5 +4,17 @@ using UnityEngine;
 
 public interface ISkill
 {
-     void ExcuteSkill();
+    float CDTime { get; set; }
+
+    float CDTimer { get; set; }
+
+    void Init();
+
+    void Update();
+
+    void Release();
+
+    bool Check();
+
+    void ExcuteSkill();
 }
