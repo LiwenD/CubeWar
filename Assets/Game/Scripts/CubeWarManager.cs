@@ -24,5 +24,21 @@ namespace YummyGame.CubeWar
                 return tableManager;
             }
         }
+
+        //ISkill testSkill;
+        //private void Start()
+        //{
+        //    testSkill = new TestSkill();
+        //    testSkill.Init();
+        //}
+
+        //private void Update()
+        //{
+        //    testSkill.Update();
+        //    if (Input.GetKeyDown(KeyCode.Y))
+        //    {
+        //        testSkill.ExcuteSkill();
+        //    }
+        //}
     }
 }
