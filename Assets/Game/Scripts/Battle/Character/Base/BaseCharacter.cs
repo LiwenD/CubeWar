@@ -10,7 +10,7 @@ public abstract class BaseCharacter : MonoBehaviour
     public CharacterData mData;
     public BaseWeapon mBaseWeapon;
     protected FSMSystem mAIFSM;
-    //protected Skill mSkill; TODO
+    protected ISkill mSkill;
 
     public abstract void InitCharacter();
 }
