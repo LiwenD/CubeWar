@@ -4,9 +4,21 @@ using UnityEngine;
 
 namespace YummyGame.CubeWar
 {
+    /// <summary>
+    /// 该格子在二维数组中的列数、行数
+    /// </summary>
+    public struct IndexInfo
+    {
+        public int col;
+        public int row;
+    }
+
     public class MapGrid
     {
         public GameObject magGo;     //该格子代表的地图物体
+
+        public IndexInfo indexInfo=new IndexInfo();  //该格子在二维数组中的列数、行数
+        public GridType gridType=GridType.None;
 
 
         /*

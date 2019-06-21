@@ -13,6 +13,7 @@ namespace YummyGame.CubeWar
         CharacterModeInfoTable,
         OccupationTable,
         Weapontable,
+        MapTable,
         Max,
     }
 
@@ -23,6 +24,20 @@ namespace YummyGame.CubeWar
     {
         Soldier = 1,
         Boomerman,
+        Max,
+    }
+
+    /// <summary>
+    /// 地图的格子类型
+    /// </summary>
+    public enum GridType
+    {
+        None = -1,
+        StartingPoint,
+        Destination,
+        BattlePoint,
+        PricePoint,
+        BossPoint,
         Max,
     }
 }

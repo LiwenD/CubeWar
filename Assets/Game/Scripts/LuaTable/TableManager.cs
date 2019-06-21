@@ -8,7 +8,7 @@ namespace YummyGame.CubeWar
 {
     public class TableManager
     {
-        private readonly string[] tablesPath = new string[(int)TableType.Max] { "data/BulletTable", "data/CharacterModeInfoTable", "data/OccupationTable", "data/WeaponTable" };
+        private readonly string[] tablesPath = new string[(int)TableType.Max] { "data/BulletTable", "data/CharacterModeInfoTable", "data/OccupationTable", "data/WeaponTable", "data/MapTable" };
 
         private Dictionary<TableType, DataTable> dicTables = new Dictionary<TableType, DataTable>();
 
