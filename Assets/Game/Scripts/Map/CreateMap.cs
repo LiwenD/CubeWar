@@ -30,6 +30,8 @@ namespace YummyGame.CubeWar
         public void Init(CubeWarManager cbm, int level)
         {
             mapInfoCache.Clear();     //清理之前留下的缓存
+            gridTypeCount.Clear();
+
             cubeWarManager = cbm;
             tableManager = cubeWarManager.MTableManager;
             mapTable = tableManager.GetTable(TableType.MapTable);
