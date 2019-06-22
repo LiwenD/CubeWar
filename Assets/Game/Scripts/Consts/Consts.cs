@@ -12,11 +12,12 @@ namespace YummyGame.CubeWar
 
         public const string MapInfoTable_Length = "";
         public const string MapInfoTable_Width = "";
-        public const string MapInfoTable_StartingPoint = "";
-        public const string MapInfoTable_Destination = "";
-        public const string MapInfoTable_BattlePoint = "";
-        public const string MapInfoTable_PricePoint = "";
-        public const string MapInfoTable_BossPoint = "";
-        #endregion
+        //public const string MapInfoTable_StartingPoint = "";
+        //public const string MapInfoTable_Destination = "";
+        //public const string MapInfoTable_BattlePoint = "";
+        //public const string MapInfoTable_PricePoint = "";
+        //public const string MapInfoTable_BossPoint = "";
+        public static readonly string[] MapInfoTableFieldName = new string[] {"","","","","", };
+            #endregion
     }
 }

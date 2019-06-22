@@ -9,8 +9,8 @@ namespace YummyGame.CubeWar
     /// </summary>
     public struct IndexInfo
     {
-        public int col;
-        public int row;
+        public int x;
+        public int y;
     }
 
     public class MapGrid
