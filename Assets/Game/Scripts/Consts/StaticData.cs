@@ -13,6 +13,6 @@ namespace YummyGame.CubeWar
         /// <summary>
         /// 当前光卡的子关卡
         /// </summary>
-        public static int CurLevelChild = 0;
+        public static int CurLevelChild = 1;
     }
 }

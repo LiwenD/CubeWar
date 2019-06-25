@@ -49,7 +49,6 @@ namespace YummyGame.CubeWar
             mapParent.position = Vector3.zero;
 
             SetInfo();
-            mapGrids = new MapGrid[mapInfo.Length, mapInfo.Width];
             CreateInfo();
             #region 
             /*读取配置表，取得这一关的关卡信息，然后开始随机生成地图
@@ -108,6 +107,7 @@ namespace YummyGame.CubeWar
         /// </summary>
         void SetInfo()
         {
+            mapGrids = new MapGrid[mapInfo.Length, mapInfo.Width];
             mapInfo = new MapInfo() { PointsCount = new int[Consts.MapInfoTableFieldName.Length] };
 
             int tableRow = ((StaticData.CurLevel - 1) * 5) + StaticData.CurLevelChild;   //*5是因为每个大关卡的子关卡是5关

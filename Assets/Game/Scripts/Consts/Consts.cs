@@ -10,14 +10,14 @@ namespace YummyGame.CubeWar
         public const string TableKeyOccupation_Name = "";//Occupation表的name
         public const string CharacterModeInfoTable_Name = ""; //CharacterModeInfoTable 表的name
 
-        public const string MapInfoTable_Length = "";
-        public const string MapInfoTable_Width = "";
+        public const string MapInfoTable_Length = "Length";
+        public const string MapInfoTable_Width = "Width";
         //public const string MapInfoTable_StartingPoint = "";
         //public const string MapInfoTable_Destination = "";
         //public const string MapInfoTable_BattlePoint = "";
         //public const string MapInfoTable_PricePoint = "";
         //public const string MapInfoTable_BossPoint = "";
-        public static readonly string[] MapInfoTableFieldName = new string[] {"","","","","", };
+        public static readonly string[] MapInfoTableFieldName = new string[] { "StartingPoint", "Destination", "BattlePoint", "PricePoint", "BossPoint", };
         public const int MapDistance= 5;
         public const string MapParentName = "MapParent";
         /// <summary>
