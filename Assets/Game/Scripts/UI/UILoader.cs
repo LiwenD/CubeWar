@@ -44,7 +44,8 @@ namespace YummyGame.CubeWar
 
         void start()
         {
-            Game.ChangeScene("Main").Event(()=> { Debug.Log("加载场景完成"); });
+            //Game.ChangeScene("Main").Event(()=> { Debug.Log("加载场景完成"); });
+            Game.ChangeScene("Test").Event(() => { Debug.Log("加载场景完成"); });
             Close();
         }
 
