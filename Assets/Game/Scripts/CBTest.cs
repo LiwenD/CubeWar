@@ -6,7 +6,7 @@ namespace YummyGame.CubeWar
 {
     public class CBTest : MonoBehaviour
     {
-
+        public bool B { get; set; }
         List<IndexInfo> tsl = new List<IndexInfo>();
         // Start is called before the first frame update
         void Start()
@@ -19,6 +19,7 @@ namespace YummyGame.CubeWar
 
             temp.x = 1;
             Debug.Log(tsl.Contains(temp));
+            Debug.Log(B);
         }
 
         // Update is called once per frame

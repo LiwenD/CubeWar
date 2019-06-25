@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using YummyGame.Framework;
+
+using Random = UnityEngine.Random;
 
 namespace YummyGame.CubeWar
 {
@@ -26,15 +29,25 @@ namespace YummyGame.CubeWar
         MapGrid[,] mapGrids;
         List<IndexInfo> mapInfoCache = new List<IndexInfo>();
         Dictionary<GridType, int> gridTypeCount = new Dictionary<GridType, int>();//记录各种grid还有多少点没有生成
+        Func<GameObject, GameObject> instantiationMapFunc; //实例化地图的委托
+        Func<GridType, string> randomMapNmae;              //随机取得GridType这个类型地图的name
+        Transform mapParent;
 
-        public void Init(CubeWarManager cbm, int level)
+        public void Init(CubeWarManager cbm, Func<GameObject, GameObject> funcinstantiationMapFunc, Func<GridType, string> funcrandomMapNmae)
         {
             mapInfoCache.Clear();     //清理之前留下的缓存
             gridTypeCount.Clear();
 
             cubeWarManager = cbm;
+            instantiationMapFunc = funcinstantiationMapFunc;
+            randomMapNmae = funcrandomMapNmae;
+
             tableManager = cubeWarManager.MTableManager;
             mapTable = tableManager.GetTable(TableType.MapTable);
+
+            mapParent = new GameObject(Consts.MapParentName).transform;
+            mapParent.position = Vector3.zero;
+
             SetInfo();
             mapGrids = new MapGrid[mapInfo.Length, mapInfo.Width];
             CreateInfo();
@@ -52,6 +65,44 @@ namespace YummyGame.CubeWar
             #endregion
         }
 
+        public IEnumerator InstantiationMap()
+        {
+            AssetLoader assetLoader = new AssetLoader();
+            int pause = 0;
+
+            foreach (var item in mapInfoCache)//生成地图物体
+            {
+                string prefabName = randomMapNmae?.Invoke(mapGrids[item.x, item.y].gridType);
+                GameObject mapPrefab = assetLoader.LoadAsset<GameObject>(prefabName);
+                GameObject mapGo = instantiationMapFunc?.Invoke(mapPrefab);
+                mapGo.transform.SetParent(mapParent);
+                mapGo.transform.localPosition = new Vector3(Consts.MapDistance * item.x, 0, Consts.MapDistance * item.y);
+                mapGrids[item.x, item.y].mapGo = mapGo;
+                mapGrids[item.x, item.y].IsInited = true;
+
+                pause++;
+                if (pause >= 5)
+                {
+                    pause = 0;
+                    yield return null;
+                }
+            }
+
+            foreach (var item in mapInfoCache)//生成地图走廊
+            {
+                Map map = mapGrids[item.x, item.y].mapGo.AddComponent<Map>();
+                map.Spawncorridor(mapGrids[item.x, item.y]);
+
+                pause++;
+                if (pause >= 5)
+                {
+                    pause = 0;
+                    yield return null;
+                }
+            }
+        }
+
+        #region 私有
         /// <summary>
         /// 设置地图信息
         /// </summary>
@@ -90,10 +141,10 @@ namespace YummyGame.CubeWar
             while (true)
             {
                 int lessen = 1;
-                while (GetGrideAroundNullCount(mapInfoCache[mapInfoCache.Count - lessen])>0)//判断这个点周围是否还能生成点
+                while (GetGrideAroundNullCount(mapInfoCache[mapInfoCache.Count - lessen]) > 0)//判断这个点周围是否还能生成点
                 {
                     lessen++;
-                    if(mapInfoCache.Count - lessen < 0)
+                    if (mapInfoCache.Count - lessen < 0)
                     {
                         Debug.LogException(new System.Exception("创建地图信息出错！"));
                         return;
@@ -121,7 +172,8 @@ namespace YummyGame.CubeWar
                 }
             }
 
-            //设置所有Grid的上下左右点的信息TODO
+            //设置所有Grid的上下左右点的信息
+            SetGridInfo();
 
             //实例化地图PrefabTODO
         }
@@ -180,12 +232,22 @@ namespace YummyGame.CubeWar
         /// <returns>True - 越界，False-未越界 </returns>
         bool CheckIsOutRange(IndexInfo indexInfo)
         {
-            //mapGrids
-            if (indexInfo.x < 0 || indexInfo.y < 0)
+            return CheckIsOutRange(indexInfo.x, indexInfo.y);
+        }
+
+        /// <summary>
+        /// 检测下标是否超过mapGrids的边界
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>True - 越界，False-未越界</returns>
+        bool CheckIsOutRange(int x, int y)
+        {
+            if (x < 0 || y < 0)
             {
                 return true;
             }
-            else if (indexInfo.x >= mapInfo.Length || indexInfo.y >= mapInfo.Width)
+            else if (x >= mapInfo.Length || y >= mapInfo.Width)
             {
                 return true;
             }
@@ -198,8 +260,14 @@ namespace YummyGame.CubeWar
         /// <returns></returns>
         GridType RandomGridType()
         {
-            //TODO
-            return GridType.BattlePoint;
+            while (true)
+            {
+                int temp = Random.Range((int)GridType.Destination, (int)GridType.Max);
+                if (gridTypeCount[(GridType)temp] > 0)
+                {
+                    return (GridType)temp;
+                }
+            }
         }
 
         /// <summary>
@@ -216,7 +284,7 @@ namespace YummyGame.CubeWar
         }
 
         /// <summary>
-        /// 
+        /// 得到这个格子空方向数量
         /// </summary>
         /// <param name="indexInfo"></param>
         /// <returns></returns>
@@ -251,5 +319,52 @@ namespace YummyGame.CubeWar
             }
             return count;
         }
+
+        /// <summary>
+        /// 设置格子的Up Down Left Right
+        /// </summary>
+        void SetGridInfo()
+        {
+            foreach (var item in mapInfoCache)
+            {
+                if (!CheckIsOutRange(item.x, item.y - 1) && mapGrids[item.x, item.y - 1] != null)//Up
+                {
+                    mapGrids[item.x, item.y].Up = mapGrids[item.x, item.y - 1];
+                }
+                else
+                {
+                    mapGrids[item.x, item.y].Up = null;
+                }
+
+                if (!CheckIsOutRange(item.x, item.y + 1) && mapGrids[item.x, item.y + 1] != null)//Down
+                {
+                    mapGrids[item.x, item.y].Down = mapGrids[item.x, item.y + 1];
+                }
+                else
+                {
+                    mapGrids[item.x, item.y].Down = null;
+                }
+
+                if (!CheckIsOutRange(item.x - 1, item.y) && mapGrids[item.x - 1, item.y] != null)//Left
+                {
+                    mapGrids[item.x, item.y].Left = mapGrids[item.x - 1, item.y];
+                }
+                else
+                {
+                    mapGrids[item.x, item.y].Left = null;
+                }
+
+                if (!CheckIsOutRange(item.x + 1, item.y) && mapGrids[item.x + 1, item.y] != null)//Right
+                {
+                    mapGrids[item.x, item.y].Right = mapGrids[item.x + 1, item.y];
+                }
+                else
+                {
+                    mapGrids[item.x, item.y].Right = null;
+                }
+            }
+        }
+
+        #endregion
     }
 }

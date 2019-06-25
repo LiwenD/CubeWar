@@ -15,11 +15,16 @@ namespace YummyGame.CubeWar
 
     public class MapGrid
     {
-        public GameObject magGo;     //该格子代表的地图物体
+        public GameObject mapGo;     //该格子代表的地图物体
 
         public IndexInfo indexInfo=new IndexInfo();  //该格子在二维数组中的列数、行数
         public GridType gridType=GridType.None;
 
+        bool isInited = false;
+        /// <summary>
+        /// 是否初始化完成
+        /// </summary>
+        public bool IsInited { get { return isInited; } set { isInited = value; } }
 
         /*
          * 这个地图格子的上下左右的邻居格子的信息

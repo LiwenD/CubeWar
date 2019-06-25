@@ -18,6 +18,20 @@ namespace YummyGame.CubeWar
         //public const string MapInfoTable_PricePoint = "";
         //public const string MapInfoTable_BossPoint = "";
         public static readonly string[] MapInfoTableFieldName = new string[] {"","","","","", };
+        public const int MapDistance= 5;
+        public const string MapParentName = "MapParent";
+        /// <summary>
+        /// 地图Prefab路径
+        /// </summary>
+        public static readonly Dictionary<GridType, string> MapPrefabPath = new Dictionary<GridType, string>()
+        {
+            [GridType.StartingPoint]= "Map/StartingPoint_",
+            [GridType.Destination] = "Map/Destination_",
+            [GridType.BattlePoint] = "Map/BattlePoint_",
+            [GridType.PricePoint] = "Map/PricePoint_",
+            [GridType.BossPoint] = "Map/BossPoint_",
+        };
+        //public static readonly Vector3 OriginPoint = Vector3.zero;
             #endregion
     }
 }
