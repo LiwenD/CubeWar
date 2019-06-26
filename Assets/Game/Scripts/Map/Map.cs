@@ -11,24 +11,25 @@ namespace YummyGame.CubeWar
         {
             AssetLoader assetLoader = new AssetLoader();
             GameObject corridorPrefab = assetLoader.LoadAsset<GameObject>("Map/CorridorPrefab");//todo 换常量
+            int offset = Consts.MapDistance / 2;
             if (MapGrid.CheckCorridor(mapGrid.Up))
             {
-                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(0, 0, -4));
+                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(0, 0, -offset));
             }
 
             if (MapGrid.CheckCorridor(mapGrid.Down))
             {
-                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(0, 0, 4));
+                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(0, 0, offset));
             }
 
             if (MapGrid.CheckCorridor(mapGrid.Left))
             {
-                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(-4, 0, 0), true);
+                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(-offset, 0, 0), true);
             }
 
             if (MapGrid.CheckCorridor(mapGrid.Right))
             {
-                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(4, 0, 0), true);
+                InstantiateCorridor(corridorPrefab, mapParent, new Vector3(offset, 0, 0), true);
             }
 
         }
