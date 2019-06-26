@@ -18,7 +18,7 @@ namespace YummyGame.CubeWar
         //public const string MapInfoTable_PricePoint = "";
         //public const string MapInfoTable_BossPoint = "";
         public static readonly string[] MapInfoTableFieldName = new string[] { "StartingPoint", "Destination", "BattlePoint", "PricePoint", "BossPoint", };
-        public const int MapDistance= 5;
+        public const int MapDistance= 8;
         public const string MapParentName = "MapParent";
         /// <summary>
         /// 地图Prefab路径

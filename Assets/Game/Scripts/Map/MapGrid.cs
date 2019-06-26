@@ -17,8 +17,8 @@ namespace YummyGame.CubeWar
     {
         public GameObject mapGo;     //该格子代表的地图物体
 
-        public IndexInfo indexInfo=new IndexInfo();  //该格子在二维数组中的列数、行数
-        public GridType gridType=GridType.None;
+        public IndexInfo indexInfo = new IndexInfo();  //该格子在二维数组中的列数、行数
+        public GridType gridType = GridType.None;
 
         bool isInited = false;
         /// <summary>
@@ -33,5 +33,19 @@ namespace YummyGame.CubeWar
         public MapGrid Down { get; set; }
         public MapGrid Left { get; set; }
         public MapGrid Right { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <returns></returns>
+        public static bool CheckCorridor(MapGrid grid)
+        {
+            if (grid != null && !grid.IsInited)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

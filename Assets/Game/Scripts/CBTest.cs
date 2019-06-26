@@ -33,8 +33,14 @@ namespace YummyGame.CubeWar
                 (GridType type) =>
                 {
                     return Consts.MapPrefabPath[type];
+                },
+                (GameObject go) =>
+                {
+                    return Instantiate(go);
                 }
                 );
+
+            StartCoroutine(createMap.InstantiationMap());
         }
 
         // Update is called once per frame

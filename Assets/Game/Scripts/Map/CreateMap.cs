@@ -31,9 +31,10 @@ namespace YummyGame.CubeWar
         Dictionary<GridType, int> gridTypeCount = new Dictionary<GridType, int>();//记录各种grid还有多少点没有生成
         Func<GameObject, GameObject> instantiationMapFunc; //实例化地图的委托
         Func<GridType, string> randomMapNmae;              //随机取得GridType这个类型地图的name
+        Func<GameObject, GameObject> instantiationCorridorFunc; //实例化走廊的委托
         Transform mapParent;
 
-        public void Init(CubeWarManager cbm, Func<GameObject, GameObject> funcinstantiationMapFunc, Func<GridType, string> funcrandomMapNmae)
+        public void Init(CubeWarManager cbm, Func<GameObject, GameObject> funcinstantiationMapFunc, Func<GridType, string> funcrandomMapNmae, Func<GameObject, GameObject> funcInstantiationCorridorFunc)
         {
             mapInfoCache.Clear();     //清理之前留下的缓存
             gridTypeCount.Clear();
@@ -41,6 +42,7 @@ namespace YummyGame.CubeWar
             cubeWarManager = cbm;
             instantiationMapFunc = funcinstantiationMapFunc;
             randomMapNmae = funcrandomMapNmae;
+            instantiationCorridorFunc = funcInstantiationCorridorFunc;
 
             tableManager = cubeWarManager.MTableManager;
             mapTable = tableManager.GetTable(TableType.MapTable);
@@ -62,13 +64,6 @@ namespace YummyGame.CubeWar
              * 遍历矩形数组的所有节点，然后判断这个节点的上下左右是否有节点，如果有则记录，并且把没有节点的方向的开口封闭
              * */
             #endregion
-
-            Debug.Log(mapGrids.Length);
-            foreach (var item in mapInfoCache)
-            {
-                Debug.Log(item.x + "===" + item.y);
-            }
-            Debug.Log(mapInfoCache.Count);
         }
 
         public IEnumerator InstantiationMap()
@@ -84,7 +79,6 @@ namespace YummyGame.CubeWar
                 mapGo.transform.SetParent(mapParent);
                 mapGo.transform.localPosition = new Vector3(Consts.MapDistance * item.x, 0, Consts.MapDistance * item.y);
                 mapGrids[item.x, item.y].mapGo = mapGo;
-                mapGrids[item.x, item.y].IsInited = true;
 
                 pause++;
                 if (pause >= 5)
@@ -97,7 +91,12 @@ namespace YummyGame.CubeWar
             foreach (var item in mapInfoCache)//生成地图走廊
             {
                 Map map = mapGrids[item.x, item.y].mapGo.AddComponent<Map>();
-                map.Spawncorridor(mapGrids[item.x, item.y]);
+                map.SpawnCorridor(mapGrids[item.x, item.y], mapParent);
+                mapGrids[item.x, item.y].IsInited = true;
+                //GameObject corridorPrefab = assetLoader.LoadAsset<GameObject>("Map/Corridor");
+                //GameObject corridor = instantiationCorridorFunc?.Invoke(corridorPrefab);
+                //corridor.transform.SetParent(mapParent);
+                //corridor.transform.localPosition = new Vector3(0, 0, 0);
 
                 pause++;
                 if (pause >= 5)
@@ -226,7 +225,7 @@ namespace YummyGame.CubeWar
                     default:
                         break;
                 }
-                if (!CheckIsOutRange(temp)&&mapGrids[temp.x,temp.y]==null)
+                if (!CheckIsOutRange(temp) && mapGrids[temp.x, temp.y] == null)
                 {
                     return temp;
                 }
