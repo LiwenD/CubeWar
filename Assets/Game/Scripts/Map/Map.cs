@@ -31,24 +31,13 @@ namespace YummyGame.CubeWar
                 InstantiateCorridor(corridorPrefab, mapParent, new Vector3(4, 0, 0), true);
             }
 
-            mapGrid.IsInited = true;
-        }
-
-        bool CheckCorridor(MapGrid grid)
-        {
-            Debug.Log(grid);
-            if (grid != null && !grid.IsInited)
-            {
-                return true;
-            }
-            return false;
         }
 
         void InstantiateCorridor(GameObject corridorPrefab, Transform par, Vector3 v3, bool isRotate90 = false)
         {
             GameObject corridor = Instantiate(corridorPrefab);
             corridor.transform.SetParent(par);
-            corridor.transform.localPosition = transform.localPosition + v3;
+            corridor.transform.localPosition = transform.localPosition + transform.localPosition + v3;
             if (isRotate90)
             {
                 corridor.transform.rotation = Quaternion.Euler(0, 90, 0);
