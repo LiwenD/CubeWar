@@ -9,7 +9,7 @@ namespace YummyGame.CubeWar
         /// <summary>
         /// 当前光卡
         /// </summary>
-        public static int CurLevel = 0;
+        public static int CurLevel = 1;
         /// <summary>
         /// 当前光卡的子关卡
         /// </summary>

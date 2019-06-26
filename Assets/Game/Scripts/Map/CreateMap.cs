@@ -62,6 +62,13 @@ namespace YummyGame.CubeWar
              * 遍历矩形数组的所有节点，然后判断这个节点的上下左右是否有节点，如果有则记录，并且把没有节点的方向的开口封闭
              * */
             #endregion
+
+            Debug.Log(mapGrids.Length);
+            foreach (var item in mapInfoCache)
+            {
+                Debug.Log(item.x + "===" + item.y);
+            }
+            Debug.Log(mapInfoCache.Count);
         }
 
         public IEnumerator InstantiationMap()
@@ -107,7 +114,6 @@ namespace YummyGame.CubeWar
         /// </summary>
         void SetInfo()
         {
-            mapGrids = new MapGrid[mapInfo.Length, mapInfo.Width];
             mapInfo = new MapInfo() { PointsCount = new int[Consts.MapInfoTableFieldName.Length] };
 
             int tableRow = ((StaticData.CurLevel - 1) * 5) + StaticData.CurLevelChild;   //*5是因为每个大关卡的子关卡是5关
@@ -131,6 +137,8 @@ namespace YummyGame.CubeWar
                 mapInfo.PointsCount[i] = mapTable.Get<int>(tableRow, Consts.MapInfoTableFieldName[i]);
                 gridTypeCount.Add((GridType)i, mapInfo.PointsCount[i]);
             }
+
+            mapGrids = new MapGrid[mapInfo.Length, mapInfo.Width];
         }
 
         bool lastGridIsPrice = false;  //表示上一次生成的GridType是不是PricePoint
@@ -141,7 +149,7 @@ namespace YummyGame.CubeWar
             while (true)
             {
                 int lessen = 1;
-                while (GetGrideAroundNullCount(mapInfoCache[mapInfoCache.Count - lessen]) > 0)//判断这个点周围是否还能生成点
+                while (GetGrideAroundNullCount(mapInfoCache[mapInfoCache.Count - lessen]) <= 0)//判断这个点周围是否还能生成点
                 {
                     lessen++;
                     if (mapInfoCache.Count - lessen < 0)
@@ -158,7 +166,7 @@ namespace YummyGame.CubeWar
                 while (lastGridIsPrice)
                 {
                     tempGridType = RandomGridType();
-                    if (tempGridType != GridType.PricePoint)
+                    if (tempGridType != GridType.PricePoint || !CheckCount(GridType.PricePoint))
                     {
                         break;
                     }
@@ -218,7 +226,7 @@ namespace YummyGame.CubeWar
                     default:
                         break;
                 }
-                if (!CheckIsOutRange(temp) && mapGrids[temp.x, temp.y] != null)
+                if (!CheckIsOutRange(temp)&&mapGrids[temp.x,temp.y]==null)
                 {
                     return temp;
                 }
@@ -260,6 +268,7 @@ namespace YummyGame.CubeWar
         /// <returns></returns>
         GridType RandomGridType()
         {
+            int j = 0;
             while (true)
             {
                 int temp = Random.Range((int)GridType.Destination, (int)GridType.Max);
@@ -267,6 +276,14 @@ namespace YummyGame.CubeWar
                 {
                     return (GridType)temp;
                 }
+                else if (IsCreated())
+                {
+                    Debug.LogException(new System.Exception("创建地图信息出错！"));
+                    return default;
+                }
+
+                j++;
+                if (j > 100) { Debug.Log("J:" + j); return default; }
             }
         }
 
@@ -312,7 +329,8 @@ namespace YummyGame.CubeWar
                     default:
                         break;
                 }
-                if (CheckIsOutRange(temp) && mapGrids[temp.x, temp.y] == null)
+
+                if (!CheckIsOutRange(temp) && mapGrids[temp.x, temp.y] == null)
                 {
                     count++;
                 }
@@ -363,6 +381,23 @@ namespace YummyGame.CubeWar
                     mapGrids[item.x, item.y].Right = null;
                 }
             }
+        }
+
+        /// <summary>
+        /// 判断除参数类型外的点之外是否还有别的点没生成
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns>True 有，false 无</returns>
+        bool CheckCount(GridType type)
+        {
+            foreach (var item in gridTypeCount)
+            {
+                if (item.Key != type && item.Value > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         #endregion
