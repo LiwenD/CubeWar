@@ -37,7 +37,7 @@ namespace YummyGame.CubeWar
         {
             GameObject corridor = Instantiate(corridorPrefab);
             corridor.transform.SetParent(par);
-            corridor.transform.localPosition = transform.localPosition + transform.localPosition + v3;
+            corridor.transform.localPosition =  transform.localPosition + v3;
             if (isRotate90)
             {
                 corridor.transform.rotation = Quaternion.Euler(0, 90, 0);
