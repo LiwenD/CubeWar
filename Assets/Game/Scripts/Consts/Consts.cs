@@ -31,7 +31,8 @@ namespace YummyGame.CubeWar
             [GridType.PricePoint] = "Map/PricePoint_",
             [GridType.BossPoint] = "Map/BossPoint_",
         };
+        public const string CorridorPath = "Map/CorridorPrefab";//地图的走廊路径
         //public static readonly Vector3 OriginPoint = Vector3.zero;
-            #endregion
+        #endregion
     }
 }

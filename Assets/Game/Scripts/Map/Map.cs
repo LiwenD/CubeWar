@@ -10,7 +10,7 @@ namespace YummyGame.CubeWar
         public void SpawnCorridor(MapGrid mapGrid, Transform mapParent)
         {
             AssetLoader assetLoader = new AssetLoader();
-            GameObject corridorPrefab = assetLoader.LoadAsset<GameObject>("Map/CorridorPrefab");//todo 换常量
+            GameObject corridorPrefab = assetLoader.LoadAsset<GameObject>(Consts.CorridorPath);
             int offset = Consts.MapDistance / 2;
             if (MapGrid.CheckCorridor(mapGrid.Up))
             {
