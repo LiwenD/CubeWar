@@ -7,9 +7,15 @@ namespace YummyGame.CubeWar
     public class Consts
     {
         #region Table表字段的key
+        #endregion
         public const string TableKeyOccupation_Name = "";//Occupation表的name
         public const string CharacterModeInfoTable_Name = ""; //CharacterModeInfoTable 表的name
 
+        #region 地图生成
+        /// <summary>
+        /// 允许生成终点的剩余长度
+        /// </summary>
+        public const int AllowSpawnDestination = 3;
         public const string MapInfoTable_Length = "Length";
         public const string MapInfoTable_Width = "Width";
         //public const string MapInfoTable_StartingPoint = "";

@@ -267,10 +267,18 @@ namespace YummyGame.CubeWar
         /// <returns></returns>
         GridType RandomGridType()
         {
-            int j = 0;
             while (true)
             {
-                int temp = Random.Range((int)GridType.Destination, (int)GridType.Max);
+                int temp;
+                if (CheckRemainNum() <= Consts.AllowSpawnDestination)//如果低于这个长度，就考虑随机生成终点
+                {
+                    temp = Random.Range((int)GridType.Destination, (int)GridType.Max);
+                }
+                else
+                {
+                    temp = Random.Range((int)GridType.BattlePoint, (int)GridType.Max);
+                }
+
                 if (gridTypeCount[(GridType)temp] > 0)
                 {
                     return (GridType)temp;
@@ -280,9 +288,6 @@ namespace YummyGame.CubeWar
                     Debug.LogException(new System.Exception("创建地图信息出错！"));
                     return default;
                 }
-
-                j++;
-                if (j > 100) { Debug.Log("J:" + j); return default; }
             }
         }
 
@@ -297,6 +302,20 @@ namespace YummyGame.CubeWar
                 if (item.Value > 0) return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 检查剩余还有多少点没生成
+        /// </summary>
+        /// <returns></returns>
+        int CheckRemainNum()
+        {
+            int num = 0;
+            foreach (var item in gridTypeCount)
+            {
+                num += item.Value;
+            }
+            return num;
         }
 
         /// <summary>
