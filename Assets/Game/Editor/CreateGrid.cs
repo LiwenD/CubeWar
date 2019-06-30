@@ -32,7 +32,7 @@ public class CreateGrid : EditorWindow
 
     string strWidth = string.Empty;
     string strLenght = string.Empty;
-    string tempLenght = string.Empty;
+    string tempElementLenght = string.Empty;
 
     void EnterSpawn()
     {
@@ -42,40 +42,49 @@ public class CreateGrid : EditorWindow
             parent.name = gridName;
             GameObject tempGO;
 
-            StrConvertInt32(tempLenght, out elementLenghtSide);
+            StrConvertInt32(tempElementLenght, out elementLenghtSide);
             StrConvertInt32(strLenght, out length);
             StrConvertInt32(strWidth, out width);
-            StrConvertInt32(strNoWall, out noWallCount);
-            StrConvertInt32(strWallHeight, out wallHeight);
-
+            if (isWall)
+            {
+                StrConvertInt32(strNoWall, out noWallCount);
+                StrConvertInt32(strWallHeight, out wallHeight);
+            }
             if (length <= 0 || width <= 0) return;
 
             #region 生成地板、围墙
+            Vector3 pos = new Vector3(((length * elementLenghtSide - 1) / 2.0f * -1.0f), 0, ((width * elementLenghtSide - 1) / 2.0f * -1.0f));
             GameObject wallParent = new GameObject("WallParent");
             wallParent.transform.SetParent(parent.transform);
+            wallParent.transform.localPosition = pos;
+
             GameObject groundParent = new GameObject("GroundParent");
             groundParent.transform.SetParent(parent.transform);
-            int lengthStartIndex = ((length / 2)+1) - (int)(noWallCount / 2.0f);
-            int lengthEndIndex = ((length / 2+1)) + (int)(noWallCount / 2.0f);
+            groundParent.transform.localPosition = pos;
+
+            int lengthStartIndex = ((length / 2) + 1) - (int)(noWallCount / 2.0f);
+            int lengthEndIndex = ((length / 2 + 1)) + (int)(noWallCount / 2.0f);
 
             int widthhStartIndex = ((width / 2) + 1) - (int)(noWallCount / 2.0f);
             int widthEndIndex = ((width / 2) + 1) + (int)(noWallCount / 2.0f);
 
             for (int i = 0; i < length; i++)//x
             {
-                for (int j = 0; j < width; j++)//y
+                for (int j = 0; j < width; j++)//z
                 {
                     tempGO = Instantiate(prefab);
                     tempGO.transform.SetParent(groundParent.transform);
                     tempGO.transform.localPosition = new Vector3(elementLenghtSide * i, 0, elementLenghtSide * j);
 
-                    if ((i == 0 || i == length - 1) || (j == 0 || j == width - 1))
+                    if (isWall)
                     {
-                        if ((i >= lengthStartIndex - 1 && i <= lengthEndIndex - 1) || (j >= widthhStartIndex - 1 && j <= widthEndIndex - 1)) continue;
-                        wallParent.transform.localPosition = Vector3.zero;
-                        tempGO = Instantiate(wallPrefab);
-                        tempGO.transform.SetParent(wallParent.transform);
-                        tempGO.transform.localPosition = new Vector3(elementLenghtSide * i, wallHeight, elementLenghtSide * j);
+                        if ((i == 0 || i == length - 1) || (j == 0 || j == width - 1))
+                        {
+                            if ((i >= lengthStartIndex - 1 && i <= lengthEndIndex - 1) || (j >= widthhStartIndex - 1 && j <= widthEndIndex - 1)) continue;
+                            tempGO = Instantiate(wallPrefab);
+                            tempGO.transform.SetParent(wallParent.transform);
+                            tempGO.transform.localPosition = new Vector3(elementLenghtSide * i, wallHeight, elementLenghtSide * j);
+                        }
                     }
                 }
             }
@@ -100,7 +109,7 @@ public class CreateGrid : EditorWindow
         gridName = EditorGUILayout.TextField(gridName, GUILayout.Width(200));
 
         EditorGUILayout.LabelField("元素长度:", GUILayout.Width(60));
-        tempLenght = EditorGUILayout.TextField(tempLenght, GUILayout.Width(200));
+        tempElementLenght = EditorGUILayout.TextField(tempElementLenght, GUILayout.Width(200));
         GUILayout.EndHorizontal();
 
         EditorGUILayout.Space();//空一行
@@ -122,6 +131,7 @@ public class CreateGrid : EditorWindow
 
     string strWallHeight = string.Empty;
     int wallHeight = 0;
+    bool isWall = true;
     void SpawnWall()
     {
         EditorGUILayout.Space();//空一行
@@ -130,6 +140,8 @@ public class CreateGrid : EditorWindow
         EditorGUILayout.LabelField("围墙元素:", GUILayout.Width(55));
         wallPrefab = (GameObject)EditorGUILayout.ObjectField(wallPrefab, typeof(GameObject), true, GUILayout.Width(200)); ;
 
+        EditorGUILayout.LabelField("是否有墙:", GUILayout.Width(55));
+        isWall = EditorGUILayout.Toggle(isWall);
         //EditorGUILayout.LabelField("Parent:", GUILayout.Width(50));
         //parent = (GameObject)EditorGUILayout.ObjectField(parent, typeof(GameObject), true, GUILayout.Width(200));
         GUILayout.EndHorizontal();
