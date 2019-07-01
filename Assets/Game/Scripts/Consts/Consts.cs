@@ -24,7 +24,7 @@ namespace YummyGame.CubeWar
         //public const string MapInfoTable_PricePoint = "";
         //public const string MapInfoTable_BossPoint = "";
         public static readonly string[] MapInfoTableFieldName = new string[] { "StartingPoint", "Destination", "BattlePoint", "PricePoint", "BossPoint", };
-        public const int MapDistance= 8;
+        public const int MapDistance= 40;
         public const string MapParentName = "MapParent";
         /// <summary>
         /// 地图Prefab路径
@@ -38,7 +38,8 @@ namespace YummyGame.CubeWar
             [GridType.BossPoint] = "Map/BossPoint_",
         };
         public const string CorridorPath = "Map/CorridorPrefab";//地图的走廊路径
-        //public static readonly Vector3 OriginPoint = Vector3.zero;
+        public const string CorridorGroundPath = "";            //走廊地板元素prefab
+        public const string CorridorWallPath = "";              //走廊墙元素路径
         #endregion
     }
 }
