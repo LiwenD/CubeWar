@@ -38,8 +38,8 @@ namespace YummyGame.CubeWar
             [GridType.BossPoint] = "Map/BossPoint_",
         };
         public const string CorridorPath = "Map/CorridorPrefab";//地图的走廊路径
-        public const string CorridorGroundPath = "";            //走廊地板元素prefab
-        public const string CorridorWallPath = "";              //走廊墙元素路径
+        public const string CorridorGroundPath = "Map/TestGround";            //走廊地板元素prefab
+        public const string CorridorWallPath = "Map/TestWall";              //走廊墙元素路径
         #endregion
     }
 }

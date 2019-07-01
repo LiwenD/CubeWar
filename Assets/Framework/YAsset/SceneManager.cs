@@ -48,6 +48,7 @@ namespace YummyGame.Framework
             //EditorSceneManager.LoadSceneInPlayMode(scenePath,new LoadSceneParameters(LoadSceneMode.Single));
             Loader = new AssetLoader();
             return UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(scenePath).AsyncAsTask();
+
             //return ImmediateTask.Start();
 #endif
         }

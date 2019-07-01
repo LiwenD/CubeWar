@@ -79,6 +79,7 @@ namespace YummyGame.CubeWar
                 mapGo.transform.SetParent(mapParent);
                 mapGo.transform.localPosition = new Vector3(Consts.MapDistance * item.x, 0, Consts.MapDistance * item.y);
                 mapGrids[item.x, item.y].SetMapGo(mapGo);
+                
 
                 pause++;
                 if (pause >= 5)
@@ -90,20 +91,10 @@ namespace YummyGame.CubeWar
 
             foreach (var item in mapInfoCache)//生成地图走廊
             {
-                Map map = mapGrids[item.x, item.y].MapGo.AddComponent<Map>();
-                map.SpawnCorridor(mapGrids[item.x, item.y], mapParent);
-                mapGrids[item.x, item.y].IsInited = true;
-                //GameObject corridorPrefab = assetLoader.LoadAsset<GameObject>("Map/Corridor");
-                //GameObject corridor = instantiationCorridorFunc?.Invoke(corridorPrefab);
-                //corridor.transform.SetParent(mapParent);
-                //corridor.transform.localPosition = new Vector3(0, 0, 0);
-
-                pause++;
-                if (pause >= 5)
-                {
-                    pause = 0;
-                    yield return null;
-                }
+                NewBehaviourScript map = mapGrids[item.x, item.y].MapGo.AddComponent<NewBehaviourScript>();//Map
+                //map.SpawnCorridor(mapGrids[item.x, item.y], mapParent);
+                //mapGrids[item.x, item.y].IsInited = true;
+                yield return null;
             }
         }
 
