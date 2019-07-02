@@ -79,7 +79,7 @@ namespace YummyGame.CubeWar
                 mapGo.transform.SetParent(mapParent);
                 mapGo.transform.localPosition = new Vector3(Consts.MapDistance * item.x, 0, Consts.MapDistance * item.y);
                 mapGrids[item.x, item.y].SetMapGo(mapGo);
-                
+
 
                 pause++;
                 if (pause >= 5)
@@ -88,12 +88,11 @@ namespace YummyGame.CubeWar
                     yield return null;
                 }
             }
-
             foreach (var item in mapInfoCache)//生成地图走廊
             {
-                NewBehaviourScript map = mapGrids[item.x, item.y].MapGo.AddComponent<NewBehaviourScript>();//Map
-                //map.SpawnCorridor(mapGrids[item.x, item.y], mapParent);
-                //mapGrids[item.x, item.y].IsInited = true;
+                Map map = mapGrids[item.x, item.y].MapGo.AddComponent<Map>();//Map
+                map.SpawnCorridor(mapGrids[item.x, item.y], mapParent);
+                mapGrids[item.x, item.y].IsInited = true;
                 yield return null;
             }
         }
@@ -202,10 +201,10 @@ namespace YummyGame.CubeWar
                 switch (randomDir)
                 {
                     case 0:
-                        temp.y -= 1;
+                        temp.y += 1;
                         break;
                     case 1:
-                        temp.y += 1;
+                        temp.y -= 1;
                         break;
                     case 2:
                         temp.x -= 1;
@@ -354,18 +353,18 @@ namespace YummyGame.CubeWar
         {
             foreach (var item in mapInfoCache)
             {
-                if (!CheckIsOutRange(item.x, item.y - 1) && mapGrids[item.x, item.y - 1] != null)//Up
+                if (!CheckIsOutRange(item.x, item.y + 1) && mapGrids[item.x, item.y + 1] != null)//Up
                 {
-                    mapGrids[item.x, item.y].Up = mapGrids[item.x, item.y - 1];
+                    mapGrids[item.x, item.y].Up = mapGrids[item.x, item.y + 1];
                 }
                 else
                 {
                     mapGrids[item.x, item.y].Up = null;
                 }
 
-                if (!CheckIsOutRange(item.x, item.y + 1) && mapGrids[item.x, item.y + 1] != null)//Down
+                if (!CheckIsOutRange(item.x, item.y - 1) && mapGrids[item.x, item.y - 1] != null)//Down
                 {
-                    mapGrids[item.x, item.y].Down = mapGrids[item.x, item.y + 1];
+                    mapGrids[item.x, item.y].Down = mapGrids[item.x, item.y - 1];
                 }
                 else
                 {

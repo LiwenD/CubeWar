@@ -15,8 +15,7 @@ namespace YummyGame.CubeWar
 
     public class MapGrid
     {
-        private GameObject mapGo;
-        public GameObject MapGo { get { return MapGo; } }     //该格子代表的地图物体
+        public GameObject MapGo { private set; get; }     //该格子代表的地图物体
 
         public Transform UpTab { private set; get; }      //tab记录的是地图物体上下左右开口的位置
         public Transform DownTab { private set; get; }
@@ -46,12 +45,12 @@ namespace YummyGame.CubeWar
         /// <param name="go"></param>
         public void SetMapGo(GameObject go)
         {
-            mapGo = go;
+            MapGo = go;
 
-            UpTab = mapGo.transform.Find("Dir/Up");
-            DownTab = mapGo.transform.Find("Dir/Down");
-            LeftTab = mapGo.transform.Find("Dir/Left");
-            RightTab = mapGo.transform.Find("Dir/Right");
+            UpTab = MapGo.transform.Find("Dir/Up");
+            DownTab = MapGo.transform.Find("Dir/Down");
+            LeftTab = MapGo.transform.Find("Dir/Left");
+            RightTab = MapGo.transform.Find("Dir/Right");
         }
 
         /// <summary>
