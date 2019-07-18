@@ -54,7 +54,7 @@ namespace YummyGame.CubeWar
         }
 
         /// <summary>
-        /// 
+        /// 检测是否能生成走廊
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>

@@ -35,6 +35,15 @@ namespace YummyGame.CubeWar
         [Inst("ChoiceMode/BtnModeDown")]
         public Button btnModeDown;
 
+        [Inst("Occupation/CharacterData/HpNum")]
+        Text hpNum;
+
+        [Inst("Occupation/CharacterData/MpNum")]
+        Text mpNum;
+
+        [Inst("Occupation/CharacterData/ArmNum")]
+        Text armNum;
+
         TableManager tableManager;
         int occupationIndex = 1;
         List<Transform> characterModes = new List<Transform>();
@@ -44,6 +53,7 @@ namespace YummyGame.CubeWar
         public override void OnCreate()
         {
             base.OnCreate();
+            tableManager = CubeWarManager.Instance.MTableManager;
             Transform showMode = root.transform.Find("ChoiceMode/ShowMode");
             for (int i = 0; i < showMode.childCount; i++)
             {
@@ -54,9 +64,8 @@ namespace YummyGame.CubeWar
         public override void OnShow()
         {
             base.OnShow();
-            tableManager = CubeWarManager.Instance.MTableManager;
             occupationIndex = 1;
-            SetOccupationName();
+            SetOccupationInfo();
         }
         #endregion
 
@@ -65,12 +74,14 @@ namespace YummyGame.CubeWar
         {
             occupationIndex--;
             occupationIndex = occupationIndex <= 0 ? (int)OccupationType.Max - 1 : occupationIndex;
+            SetOccupationInfo();
         }
 
         void BtnOccuDown()
         {
             occupationIndex++;
             occupationIndex = occupationIndex >= (int)OccupationType.Max ? 1 : occupationIndex;
+            SetOccupationInfo();
         }
 
         void BtnEnter()
@@ -92,12 +103,25 @@ namespace YummyGame.CubeWar
         #endregion
 
         /// <summary>
-        /// 设置显示职业名字的text
+        /// 设置显示职业信息的Text
         /// </summary>
-        void SetOccupationName()
+        void SetOccupationInfo()
         {
-            string name = tableManager.GetTableElement<string>(TableType.OccupationTable, occupationIndex, Consts.TableKeyOccupation_Name);
-            occupationName.text = name;
+            occupationName.text = tableManager.GetTableElement<string>(TableType.OccupationTable, occupationIndex, Consts.OccupationTable_Name);
+            hpNum.text = tableManager.GetTableElement<int>(TableType.OccupationTable, occupationIndex, Consts.OccupationTable_Hp).ToString();
+            mpNum.text = tableManager.GetTableElement<int>(TableType.OccupationTable, occupationIndex, Consts.OccupationTable_Mp).ToString();
+            armNum.text = tableManager.GetTableElement<int>(TableType.OccupationTable, occupationIndex, Consts.OccupationTable_Armor).ToString();
+
+            //显示对应模型
+            for (int i = 0; i < characterModes.Count; i++)
+            {
+                if (i != occupationIndex - 1)
+                {
+                    characterModes[i].gameObject.SetActive(false);
+                    continue;
+                }
+                characterModes[i].gameObject.SetActive(true); 
+            }
         }
     }
 }

@@ -6,10 +6,13 @@ namespace YummyGame.CubeWar
 {
     public class Consts
     {
-        #region Table表字段的key
+        #region 职业表
+        public const string OccupationTable_Name = "";//Occupation表的name
+        public const string OccupationTable_Hp = "";
+        public const string OccupationTable_Mp = "";
+        public const string OccupationTable_Armor = "";
+        //public const string CharacterModeInfoTable_Name = ""; //CharacterModeInfoTable 表的name
         #endregion
-        public const string TableKeyOccupation_Name = "";//Occupation表的name
-        public const string CharacterModeInfoTable_Name = ""; //CharacterModeInfoTable 表的name
 
         #region 地图生成
         /// <summary>
@@ -24,14 +27,14 @@ namespace YummyGame.CubeWar
         //public const string MapInfoTable_PricePoint = "";
         //public const string MapInfoTable_BossPoint = "";
         public static readonly string[] MapInfoTableFieldName = new string[] { "StartingPoint", "Destination", "BattlePoint", "PricePoint", "BossPoint", };
-        public const int MapDistance= 40;
+        public const int MapDistance = 40;
         public const string MapParentName = "MapParent";
         /// <summary>
         /// 地图Prefab路径
         /// </summary>
         public static readonly Dictionary<GridType, string> MapPrefabPath = new Dictionary<GridType, string>()
         {
-            [GridType.StartingPoint]= "Map/StartingPoint_",
+            [GridType.StartingPoint] = "Map/StartingPoint_",
             [GridType.Destination] = "Map/Destination_",
             [GridType.BattlePoint] = "Map/BattlePoint_",
             [GridType.PricePoint] = "Map/PricePoint_",
